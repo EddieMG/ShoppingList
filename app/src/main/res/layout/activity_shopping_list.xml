@@ -34,6 +34,7 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
+            android:lineSpacingExtra="8sp"
             android:text="+"
             android:textSize="30sp" />
 
