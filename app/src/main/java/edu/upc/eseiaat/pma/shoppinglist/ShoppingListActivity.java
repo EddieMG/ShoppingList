@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class ShoppingListActivity extends AppCompatActivity {
 
-    private ArrayList<String> itemlist;
+    private ArrayList<ShoppingItem> itemlist;
     private ShoppingListAdapter adapter;
     private ListView list;
     private Button btn_add;
@@ -32,10 +32,10 @@ public class ShoppingListActivity extends AppCompatActivity {
         btn_add = (Button)findViewById(R.id.btn_add);
         edit_item = (EditText) findViewById(R.id.edit_item);
         itemlist=new ArrayList<>();
-        itemlist.add("NIkon");
-        itemlist.add("BMW Bk75");
-        itemlist.add("iPrusa");
-        itemlist.add("Snowboard");
+        itemlist.add(new ShoppingItem("NIkon",true));
+        itemlist.add(new ShoppingItem("BMW Bk75",true));
+        itemlist.add(new ShoppingItem("iPrusa"));
+        itemlist.add(new ShoppingItem("Snowboard"));
 
         adapter= new ShoppingListAdapter(
                 this,
@@ -94,7 +94,7 @@ public class ShoppingListActivity extends AppCompatActivity {
     private void addItem() {
         String item_text=edit_item.getText().toString();
         if (!item_text.isEmpty()){
-        itemlist.add(item_text);
+        itemlist.add( new ShoppingItem(item_text));
         adapter.notifyDataSetChanged();
         edit_item.setText("");
         }
