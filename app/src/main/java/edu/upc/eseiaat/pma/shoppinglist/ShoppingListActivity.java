@@ -58,7 +58,14 @@ public class ShoppingListActivity extends AppCompatActivity {
             }
         });
 
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+               itemlist.get(position).toggleChecked();
+                adapter.notifyDataSetChanged();
 
+            }
+        });
 
 
         list.setAdapter(adapter);
@@ -78,7 +85,7 @@ public class ShoppingListActivity extends AppCompatActivity {
         AlertDialog.Builder builder= new AlertDialog.Builder(this);
         builder.setTitle(R.string.confirm);
         String fmt = getResources().getString(R.string.confirm_message);
-        builder.setMessage(String.format(fmt,itemlist.get(pos)));
+        builder.setMessage(String.format(fmt,itemlist.get(pos).getText()));
         builder.setPositiveButton(R.string.remove, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -98,5 +105,7 @@ public class ShoppingListActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
         edit_item.setText("");
         }
+        list.smoothScrollToPosition(itemlist.size()-1);
     }
+
 }
