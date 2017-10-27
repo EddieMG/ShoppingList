@@ -7,6 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -169,5 +172,52 @@ public class ShoppingListActivity extends AppCompatActivity {
         }
         list.smoothScrollToPosition(itemlist.size()-1);
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.options, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.clear_checked:
+                clearChecked();
+                return true;
+            case R.id.clear_all;
+                clearAll();
+                return true;
 
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void clearAll() {
+        AlertDialog.Builder builder= new AlertDialog.Builder(this);
+        builder.setTitle(R.string.confirm);
+        builder.setMessage(R.string.confirm_clear_all);
+        builder.setPositiveButton(R.string.clear_all, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                itemlist.clear();
+                adapter.notifyDataSetChanged();
+            }
+        });
+        builder.setNegativeButton(android.R.string.cancel,null);
+        builder.create().show();
+
+    }
+
+    private void clearChecked() {
+        int i=0;
+        while ( i <itemlist.size()){
+            if (itemlist.get(i).isChecked()){
+                itemlist.remove(i);
+            }else i++;
+
+        }
+        adapter.notifyDataSetChanged();
+    }
 }

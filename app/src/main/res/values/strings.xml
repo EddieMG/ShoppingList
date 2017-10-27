@@ -5,4 +5,7 @@
     <string name="confirm_message">Sure you want to remove \'%1$s\'?</string>
     <string name="cannot_write">cannot_write</string>
     <string name="cannot_read">cannot read list</string>
+    <string name="clear_checked">Clear checked</string>
+    <string name="clear_all">Clear all</string>
+    <string name="confirm_clear_all">Clear all items?</string>
 </resources>
