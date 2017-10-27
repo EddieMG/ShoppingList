@@ -16,6 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -24,6 +25,9 @@ import java.util.ArrayList;
 public class ShoppingListActivity extends AppCompatActivity {
 
     private static final String FILENAME= "shopping_list.txt";
+    private static final int MAX_BYTES= 8000;
+
+
     private ArrayList<ShoppingItem> itemlist;
     private ShoppingListAdapter adapter;
     private ListView list;
@@ -49,6 +53,31 @@ public class ShoppingListActivity extends AppCompatActivity {
 
     }
 
+
+    private  void readItemList(){
+        itemlist= new ArrayList<>();
+        try {
+            FileInputStream fis= openFileInput(FILENAME);
+            byte [] buffer= new byte[MAX_BYTES];
+           int nread=fis.read(buffer);
+            String content =new String(buffer,0,nread);
+            String[] lines= content.split("\n");
+            for (String line : lines) {
+                String[] parts = line.split(";");
+                itemlist.add(new ShoppingItem(parts[0], parts[1].equals("true")));
+
+            }
+            fis.close();
+        } catch (FileNotFoundException e) {
+            Log.i("Eddie","readItemList: FileNotFoundException ");
+
+        } catch (IOException e) {
+            Log.e("Eddie","readItemList: IOException ");
+            Toast.makeText(this,R.string.cannot_read,Toast.LENGTH_SHORT).show();
+        }
+
+
+    }
     @Override
     protected void onStop() {
         super.onStop();
@@ -63,11 +92,12 @@ public class ShoppingListActivity extends AppCompatActivity {
         list = (ListView)findViewById(R.id.list);
         btn_add = (Button)findViewById(R.id.btn_add);
         edit_item = (EditText) findViewById(R.id.edit_item);
-        itemlist=new ArrayList<>();
+        readItemList();
+       /** itemlist=new ArrayList<>();
         itemlist.add(new ShoppingItem("NIkon",true));
         itemlist.add(new ShoppingItem("BMW Bk75",true));
         itemlist.add(new ShoppingItem("iPrusa"));
-        itemlist.add(new ShoppingItem("Snowboard"));
+        itemlist.add(new ShoppingItem("Snowboard"));**/
 
         adapter= new ShoppingListAdapter(
                 this,
