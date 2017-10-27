@@ -62,13 +62,15 @@ public class ShoppingListActivity extends AppCompatActivity {
         try {
             FileInputStream fis= openFileInput(FILENAME);
             byte [] buffer= new byte[MAX_BYTES];
-           int nread=fis.read(buffer);
-            String content =new String(buffer,0,nread);
-            String[] lines= content.split("\n");
-            for (String line : lines) {
-                String[] parts = line.split(";");
-                itemlist.add(new ShoppingItem(parts[0], parts[1].equals("true")));
+            int nread=fis.read(buffer);
+            if(nread>0 ) {
+                String content = new String(buffer, 0, nread);
+                String[] lines = content.split("\n");
+                for (String line : lines) {
+                    String[] parts = line.split(";");
+                    itemlist.add(new ShoppingItem(parts[0], parts[1].equals("true")));
 
+                }
             }
             fis.close();
         } catch (FileNotFoundException e) {
@@ -185,7 +187,7 @@ public class ShoppingListActivity extends AppCompatActivity {
             case R.id.clear_checked:
                 clearChecked();
                 return true;
-            case R.id.clear_all;
+            case R.id.clear_all:
                 clearAll();
                 return true;
 
