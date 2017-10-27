@@ -3,4 +3,5 @@
     <string name="confirm">confrim</string>
     <string name="remove">remove</string>
     <string name="confirm_message">Sure you want to remove \'%1$s\'?</string>
+    <string name="cannot_write">cannot_write</string>
 </resources>
